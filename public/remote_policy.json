@@ -1,0 +1,5 @@
+{
+  "min_supported_version": "1.0.284.0",
+  "store_url": "ms-windows-store://pdp/?ProductId=9N8W15PSMT83",
+  "note": "Increase min_supported_version to block older app versions and force update via Store."
+}

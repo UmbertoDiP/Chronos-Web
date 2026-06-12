@@ -1,0 +1,60 @@
+# Cloudflare Pages Headers
+# Fix AI Crawler Access
+
+# Global headers for all HTML pages
+/*
+  X-Robots-Tag: all
+  X-AI-Crawlers: GPTBot,ClaudeBot,PerplexityBot,Google-Extended,CCBot,anthropic-ai
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Allow AI crawlers explicitly (override Cloudflare managed)
+/*.html
+  X-Robots-Tag: all, noarchive
+  Cache-Control: public, max-age=3600
+
+# SPA routing - serve index.html for routes
+/privacy
+  X-Robots-Tag: all
+  Content-Type: text/html; charset=utf-8
+
+/terms
+  X-Robots-Tag: all
+  Content-Type: text/html; charset=utf-8
+
+/it
+  X-Robots-Tag: all
+  Content-Type: text/html; charset=utf-8
+
+/it/*
+  X-Robots-Tag: all
+  Content-Type: text/html; charset=utf-8
+
+/es
+  X-Robots-Tag: all
+  Content-Type: text/html; charset=utf-8
+
+/fr
+  X-Robots-Tag: all
+  Content-Type: text/html; charset=utf-8
+
+/de
+  X-Robots-Tag: all
+  Content-Type: text/html; charset=utf-8
+
+# Static assets
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Sitemap
+/sitemap.xml
+  Content-Type: application/xml
+  X-Robots-Tag: all
+  Cache-Control: public, max-age=3600
+
+# Robots.txt
+/robots.txt
+  Content-Type: text/plain
+  X-Robots-Tag: all
+  Cache-Control: public, max-age=3600

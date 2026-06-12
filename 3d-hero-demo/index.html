@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folder2Text 3D Logo Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .text-content {
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 1.5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 16px;
+      background: rgba(102, 126, 234, 0.15);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #a78bfa;
+    }
+
+    #canvas-container {
+      width: 100%;
+      height: 600px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loading-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-align: center;
+    }
+
+    @media (max-width: 968px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      #canvas-container {
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="text-content">
+      <h1>Folder2Text</h1>
+      <p>
+        Converti strutture di cartelle in contesto pronto per LLM.
+        Analisi intelligente, output ottimizzato, privacy garantita.
+      </p>
+      <span class="badge">🚀 3D Interactive Demo</span>
+    </div>
+
+    <div id="canvas-container">
+      <div class="loading-text" id="loading-text">Loading 3D model...</div>
+    </div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+    // --- Config ---
+    const MODEL_PATH = './public/folder2text_logo.glb?v=' + Date.now();
+    const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    // --- Utils ---
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    // --- Init Scene ---
+    const container = document.getElementById('canvas-container');
+    const loadingText = document.getElementById('loading-text');
+
+    const scene = new THREE.Scene();
+
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setClearColor(0x000000, 0);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    container.appendChild(renderer.domElement);
+
+    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+    camera.position.set(0, 0, 5.2);
+
+    // --- Lights ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    keyLight.position.set(3.5, 4.5, 6.0);
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.7);
+    rimLight.position.set(-4.0, 2.0, -3.0);
+    scene.add(rimLight);
+
+    // --- Postprocessing ---
+    const composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(1, 1),
+      0.65,  // strength
+      0.35,  // radius
+      0.85   // threshold
+    );
+    composer.addPass(bloomPass);
+
+    // --- Model Group ---
+    const modelGroup = new THREE.Group();
+    scene.add(modelGroup);
+
+    let modelRoot = null;
+
+    // --- Cheap environment ---
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+    const envScene = new THREE.Scene();
+    const envTexture = pmremGenerator.fromScene(envScene, 0.04).texture;
+    scene.environment = envTexture;
+
+    // --- Ground shadow plane ---
+    const groundGeometry = new THREE.CircleGeometry(2.0, 64);
+    const groundMaterial = new THREE.MeshStandardMaterial({
+      color: 0x000000,
+      roughness: 1,
+      metalness: 0,
+      transparent: true,
+      opacity: 0.12
+    });
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -1.55;
+    scene.add(ground);
+
+    // --- Load Model ---
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load(
+      MODEL_PATH,
+      (gltf) => {
+        modelRoot = gltf.scene;
+
+        // Normalize materials
+        modelRoot.traverse((obj) => {
+          if (!obj.isMesh) return;
+          obj.castShadow = false;
+          obj.receiveShadow = false;
+
+          const mat = obj.material;
+          if (mat && mat.isMeshStandardMaterial) {
+            mat.envMapIntensity = 1.1;
+            mat.needsUpdate = true;
+          }
+        });
+
+        // Center and scale
+        const box = new THREE.Box3().setFromObject(modelRoot);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+        modelRoot.position.sub(center);
+
+        const maxAxis = Math.max(size.x, size.y, size.z);
+        const scale = 2.9 / maxAxis;
+        modelRoot.scale.setScalar(scale);
+
+        // Initial tilt
+        modelRoot.rotation.x = THREE.MathUtils.degToRad(6);
+        modelRoot.rotation.y = THREE.MathUtils.degToRad(-10);
+
+        modelGroup.add(modelRoot);
+
+        loadingText.style.display = 'none';
+        console.log('3D model loaded successfully');
+      },
+      (progress) => {
+        const percent = (progress.loaded / progress.total * 100).toFixed(0);
+        loadingText.textContent = `Loading 3D model... ${percent}%`;
+      },
+      (error) => {
+        console.error('Failed to load GLB:', error);
+        loadingText.textContent = 'Error loading model';
+        loadingText.style.color = '#ff6b6b';
+      }
+    );
+
+    // --- Interaction ---
+    const pointer = {
+      normalizedX: 0,
+      normalizedY: 0,
+      targetX: 0,
+      targetY: 0
+    };
+
+    function onPointerMove(event) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+
+      pointer.targetX = (x - 0.5) * 2;
+      pointer.targetY = (y - 0.5) * 2;
+    }
+
+    // Only on desktop with fine pointer
+    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+    if (isFinePointer && !REDUCED_MOTION && !IS_MOBILE) {
+      renderer.domElement.addEventListener('pointermove', onPointerMove, { passive: true });
+    }
+
+    // --- Resize ---
+    function resize() {
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+
+      composer.setSize(width, height);
+      bloomPass.setSize(width, height);
+    }
+
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    // --- Animation Loop ---
+    const clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const elapsed = clock.getElapsedTime();
+
+      // Smooth lerp
+      pointer.normalizedX += (pointer.targetX - pointer.normalizedX) * 0.06;
+      pointer.normalizedY += (pointer.targetY - pointer.normalizedY) * 0.06;
+
+      if (modelRoot) {
+        const rotationSpeed = REDUCED_MOTION ? 0.18 : 0.55;
+
+        // Base spin
+        modelGroup.rotation.y = elapsed * rotationSpeed;
+
+        // Floating
+        const floatAmount = REDUCED_MOTION ? 0.02 : 0.07;
+        modelGroup.position.y = Math.sin(elapsed * 1.15) * floatAmount;
+
+        // Parallax tilt
+        if (!REDUCED_MOTION && !IS_MOBILE) {
+          const maxTilt = THREE.MathUtils.degToRad(7);
+          const tiltX = clamp(-pointer.normalizedY * maxTilt, -maxTilt, maxTilt);
+          const tiltZ = clamp(pointer.normalizedX * maxTilt, -maxTilt, maxTilt);
+
+          modelGroup.rotation.x = tiltX;
+          modelGroup.rotation.z = tiltZ;
+        } else {
+          modelGroup.rotation.x = 0;
+          modelGroup.rotation.z = 0;
+        }
+      }
+
+      composer.render();
+    }
+
+    animate();
+  </script>
+</body>
+</html>

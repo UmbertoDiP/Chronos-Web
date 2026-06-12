@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Favicons</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        .download-section { margin: 20px 0; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Favicon Generator</h1>
+    <p>Source SVG loaded. Click buttons to generate and download favicons.</p>
+
+    <div class="download-section">
+        <button onclick="generateFavicon(16)">Generate 16x16 ICO</button>
+        <button onclick="generateFavicon(32)">Generate 32x32 ICO</button>
+        <button onclick="generateFavicon(48)">Generate 48x48 PNG</button>
+        <button onclick="generateFavicon(192)">Generate 192x192 PNG</button>
+        <button onclick="generateFavicon(512)">Generate 512x512 PNG</button>
+    </div>
+
+    <div id="preview"></div>
+
+    <script>
+        const svgString = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="url(#grad)"/>
+  <text x="16" y="22" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="white">UDP</text>
+</svg>`;
+
+        function generateFavicon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            const img = new Image();
+            const blob = new Blob([svgString], {type: 'image/svg+xml'});
+            const url = URL.createObjectURL(blob);
+
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, size, size);
+
+                // Show preview
+                const previewCanvas = canvas.cloneNode(true);
+                document.getElementById('preview').appendChild(previewCanvas);
+
+                // Download
+                canvas.toBlob(function(blob) {
+                    const link = document.createElement('a');
+                    if (size <= 48) {
+                        link.download = `favicon-${size}x${size}.ico`;
+                    } else {
+                        link.download = `icon-${size}.png`;
+                    }
+                    link.href = URL.createObjectURL(blob);
+                    link.click();
+                }, 'image/png');
+
+                URL.revokeObjectURL(url);
+            };
+
+            img.src = url;
+        }
+
+        // Auto-generate all on load
+        window.onload = function() {
+            console.log('Ready to generate favicons');
+        };
+    </script>
+</body>
+</html>

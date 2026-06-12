@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Chronos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2563eb;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #1e40af;
+            margin-top: 30px;
+        }
+        .last-updated {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+        .highlight {
+            background-color: #fef3c7;
+            padding: 15px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+        }
+        ul {
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .contact {
+            background-color: #f0f9ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Privacy Policy</h1>
+    <p class="last-updated">Last updated: January 24, 2026</p>
+
+    <div class="highlight">
+        <strong>TL;DR:</strong> Chronos does NOT collect any personal data. The app runs entirely offline on your device. No files are uploaded, transmitted, or stored remotely.
+    </div>
+
+    <h2>1. Data Collection</h2>
+    <p><strong>Chronos does NOT collect any personal information.</strong></p>
+    <p>The application is designed to operate completely offline and locally on your device. We do not:</p>
+    <ul>
+        <li>Collect user names, email addresses, or contact information</li>
+        <li>Track your usage behavior or analytics</li>
+        <li>Access your location or device identifiers (except for trial management, see below)</li>
+        <li>Upload, transmit, or store any of your files remotely</li>
+    </ul>
+
+    <h2>2. File Access and Processing</h2>
+    <p>Chronos requires access to your files and folders to perform its core functionality: merging text files into a single output.</p>
+
+    <p><strong>File access is limited to:</strong></p>
+    <ul>
+        <li>Files and folders you explicitly select via:
+            <ul>
+                <li>Windows Explorer context menu (right-click)</li>
+                <li>Drag-and-drop into the application</li>
+                <li>File picker dialog within the app</li>
+            </ul>
+        </li>
+        <li>Reading file contents for extraction and merging</li>
+        <li>Creating a single output text file with merged content</li>
+    </ul>
+
+    <p><strong>What we DO NOT do with your files:</strong></p>
+    <ul>
+        <li>Upload files to any server or cloud service</li>
+        <li>Share files with third parties</li>
+        <li>Scan or access files you haven't explicitly selected</li>
+        <li>Store copies of your files beyond the output file you create</li>
+    </ul>
+
+    <h2>3. Trial System and Local Data Storage</h2>
+    <p>Chronos includes a free trial system that allows 3 free extractions before requiring a license purchase.</p>
+
+    <p><strong>Trial data stored locally:</strong></p>
+    <ul>
+        <li><strong>Location:</strong> <code>%LOCALAPPDATA%\Chronos\trial.db</code> (SQLite database)</li>
+        <li><strong>Data stored:</strong>
+            <ul>
+                <li>Number of extractions performed (integer counter)</li>
+                <li>Trial expiration timestamp (date/time)</li>
+                <li>Device identifier (anonymous hash, used only to prevent trial reset)</li>
+            </ul>
+        </li>
+        <li><strong>Purpose:</strong> Tracking trial usage to enforce the 3-extraction limit</li>
+        <li><strong>Transmission:</strong> This data is NEVER transmitted off your device</li>
+        <li><strong>Deletion:</strong> You can delete this file manually, or it will be removed when you uninstall the app</li>
+    </ul>
+
+    <h2>4. License Management</h2>
+    <p>Depending on your platform and purchase method, Chronos uses different licensing systems:</p>
+
+    <h3>4.1 Microsoft Store (Windows 11)</h3>
+    <p>If you purchased Chronos via the Microsoft Store, all payment processing and license management is handled by Microsoft.</p>
+    <ul>
+        <li><strong>What Microsoft collects:</strong> Refer to <a href="https://privacy.microsoft.com/privacystatement" target="_blank">Microsoft's Privacy Statement</a></li>
+        <li><strong>License verification:</strong> The app queries the Microsoft Store API locally to verify your purchase</li>
+        <li><strong>No personal data:</strong> Chronos does not receive or store your Microsoft account information</li>
+    </ul>
+
+    <h3>4.2 License Key System (Future Implementation)</h3>
+    <p><strong>Note:</strong> We are planning to introduce an alternative licensing system that allows purchasing license keys directly from our website or third-party platforms (e.g., Gumroad, Paddle).</p>
+
+    <p><strong>When implemented, this system will:</strong></p>
+    <ul>
+        <li>Allow you to enter a license key purchased elsewhere</li>
+        <li>Validate the key via a secure HTTPS API call (one-time only)</li>
+        <li>Store the validated license key locally on your device (encrypted)</li>
+        <li>Operate offline after initial validation</li>
+    </ul>
+
+    <p><strong>Data transmitted during license key validation:</strong></p>
+    <ul>
+        <li>License key (alphanumeric string)</li>
+        <li>Device identifier (anonymous hash, to prevent key sharing abuse)</li>
+        <li>App version number</li>
+    </ul>
+
+    <p><strong>No personal information</strong> (name, email, payment details) is transmitted by the Chronos app. If you purchase a license key from our website or a third-party platform, their privacy policies apply to that transaction.</p>
+
+    <h2>5. Network Access and Connectivity</h2>
+    <p><strong>Current version:</strong> Chronos operates entirely offline and does NOT connect to the internet.</p>
+
+    <p><strong>Future updates may include optional network features:</strong></p>
+    <ul>
+        <li><strong>Update checks:</strong> The app may check for new versions via Microsoft Store API (Windows 11) or our update server</li>
+        <li><strong>License key validation:</strong> One-time HTTPS call to validate a license key (if using external licensing)</li>
+        <li><strong>Crash reporting (opt-in only):</strong> Anonymous crash logs to help us improve stability (feature not yet implemented)</li>
+    </ul>
+
+    <p>All network features will be:</p>
+    <ul>
+        <li>Clearly communicated to users</li>
+        <li>Optional (where applicable)</li>
+        <li>Secure (HTTPS only)</li>
+        <li>Anonymous (no personal data transmitted)</li>
+    </ul>
+
+    <h2>6. Third-Party Services</h2>
+    <p><strong>Current version:</strong> Chronos does NOT integrate with any third-party services, SDKs, or analytics platforms.</p>
+
+    <p><strong>Potential future integrations (not yet implemented):</strong></p>
+    <ul>
+        <li><strong>Payment processors:</strong> If you purchase a license key via our website, we may use payment processors like Stripe, PayPal, or Gumroad. Their privacy policies apply to those transactions.</li>
+        <li><strong>Cloud storage (optional):</strong> Future versions may allow optional integration with cloud services (OneDrive, Google Drive) to sync settings or presets. This would be opt-in only.</li>
+    </ul>
+
+    <p>We will update this privacy policy if any third-party services are integrated.</p>
+
+    <h2>7. Windows 10 vs Windows 11 Differences</h2>
+
+    <h3>7.1 Windows 11 (Microsoft Store MSIX)</h3>
+    <ul>
+        <li>Context menu integration is sandboxed within the MSIX package</li>
+        <li>File access is governed by Windows 10/11 privacy permissions (broadFileSystemAccess capability)</li>
+        <li>License managed by Microsoft Store</li>
+        <li>Updates delivered automatically via Microsoft Store</li>
+    </ul>
+
+    <h3>7.2 Windows 10 (Standalone Edition - Not Yet Available)</h3>
+    <p><strong>Note:</strong> A Windows 10 standalone version is planned for future release. When available:</p>
+    <ul>
+        <li>Context menu integration will be installed via registry (requires Administrator privileges once)</li>
+        <li>File access is unrestricted (standard desktop application)</li>
+        <li>License will use external license key system (see section 4.2)</li>
+        <li>Updates will be manual download or auto-update check (to be determined)</li>
+    </ul>
+
+    <h2>8. Children's Privacy</h2>
+    <p>Chronos is a productivity tool designed for general audiences aged 3+ (as rated in the Microsoft Store).</p>
+    <ul>
+        <li>The app does not knowingly collect personal information from children under 13</li>
+        <li>No user accounts or profiles are created</li>
+        <li>No social features or user-generated content sharing</li>
+    </ul>
+
+    <h2>9. Data Retention and Deletion</h2>
+    <p><strong>Local data stored by Chronos:</strong></p>
+    <ul>
+        <li><strong>Trial database:</strong> <code>%LOCALAPPDATA%\Chronos\trial.db</code> – retained until app uninstall or manual deletion</li>
+        <li><strong>License key:</strong> Encrypted and stored locally – retained until app uninstall</li>
+        <li><strong>App settings:</strong> Preferences and configuration – retained until app uninstall</li>
+    </ul>
+
+    <p><strong>To delete all Chronos data:</strong></p>
+    <ol>
+        <li>Uninstall the app via Windows Settings → Apps → Chronos → Uninstall</li>
+        <li>(Optional) Manually delete the data folder: <code>%LOCALAPPDATA%\Chronos\</code></li>
+    </ol>
+
+    <p>Since Chronos does not transmit data to any servers, there is no remote data to delete.</p>
+
+    <h2>10. Security</h2>
+    <p>We take reasonable measures to protect data stored locally by Chronos:</p>
+    <ul>
+        <li><strong>License keys:</strong> Encrypted using industry-standard encryption (AES-256)</li>
+        <li><strong>Network communication:</strong> All future network features will use HTTPS only</li>
+        <li><strong>Code signing:</strong> The application executable is signed to prevent tampering (Microsoft Store version)</li>
+    </ul>
+
+    <p>However, as Chronos operates entirely on your local device, the security of your data depends primarily on your device's security settings and your Windows user account protections.</p>
+
+    <h2>11. International Users and Data Transfers</h2>
+    <p>Since Chronos processes all data locally on your device and does not transmit data to external servers:</p>
+    <ul>
+        <li>No international data transfers occur</li>
+        <li>GDPR, CCPA, and other privacy regulations are satisfied by design (no data collection)</li>
+        <li>The app can be used globally without privacy concerns</li>
+    </ul>
+
+    <p><strong>Future licensing system:</strong> If license key validation is implemented, the validation server may be hosted in the EU or USA. Only anonymous data (license key + device hash) will be transmitted.</p>
+
+    <h2>12. Your Rights</h2>
+    <p>Under various privacy laws (GDPR, CCPA, etc.), you have rights regarding your personal data. However, since Chronos does not collect or store personal data remotely:</p>
+    <ul>
+        <li><strong>Right to access:</strong> All data is stored locally on your device and accessible to you</li>
+        <li><strong>Right to deletion:</strong> You can delete all local data by uninstalling the app</li>
+        <li><strong>Right to data portability:</strong> Not applicable (no remote data)</li>
+        <li><strong>Right to object:</strong> You control all file access via explicit user actions</li>
+    </ul>
+
+    <p>If you have questions about your data, please contact us (see section 14).</p>
+
+    <h2>13. Changes to This Privacy Policy</h2>
+    <p>We may update this Privacy Policy from time to time to reflect:</p>
+    <ul>
+        <li>New features or functionality</li>
+        <li>Changes in legal requirements</li>
+        <li>Improvements to our practices</li>
+    </ul>
+
+    <p><strong>When we update this policy:</strong></p>
+    <ul>
+        <li>We will update the "Last updated" date at the top of this page</li>
+        <li>Significant changes will be announced via the app (notification or changelog)</li>
+        <li>You can always find the latest version at: <a href="https://chronos.dev/privacy">https://chronos.dev/privacy</a></li>
+    </ul>
+
+    <p>Continued use of Chronos after changes indicates your acceptance of the updated policy.</p>
+
+    <h2>14. Contact Us</h2>
+    <div class="contact">
+        <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your data, please contact us:</p>
+        <ul>
+            <li><strong>Email:</strong> <a href="mailto:support@chronos.dev">support@chronos.dev</a></li>
+            <li><strong>Website:</strong> <a href="https://chronos.dev">https://chronos.dev</a></li>
+            <li><strong>Support:</strong> <a href="https://chronos.dev/support">https://chronos.dev/support</a></li>
+        </ul>
+        <p><strong>Developer:</strong> Chronos<br>
+        <strong>For Microsoft Store users:</strong> You can also contact us via the Microsoft Store app listing.</p>
+    </div>
+
+    <h2>15. Summary</h2>
+    <div class="highlight">
+        <strong>Key Takeaways:</strong>
+        <ul>
+            <li>No personal data collection</li>
+            <li>Fully offline operation (current version)</li>
+            <li>Files stay on your device</li>
+            <li>Trial system uses local database only</li>
+            <li>Future licensing options will be transparent and minimal</li>
+            <li>You control all file access</li>
+        </ul>
+    </div>
+
+    <hr style="margin-top: 50px; border: none; border-top: 1px solid #ccc;">
+    <p style="text-align: center; color: #666; font-size: 14px;">
+        &copy; 2026 Chronos. All rights reserved. |
+        <a href="https://chronos.dev">Website</a> |
+        <a href="https://chronos.dev/support">Support</a> |
+        <a href="https://chronos.dev/terms">Terms of Service</a>
+    </p>
+</body>
+</html>

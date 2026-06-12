@@ -1,0 +1,125 @@
+// Cloudflare Pages Functions Middleware
+// Fix AI-SEO Critical Issues (Score: 42 -> 85+)
+
+interface Env {
+  ASSETS: Fetcher;
+}
+
+// AI Crawler User-Agents (allow all)
+const AI_CRAWLERS = [
+  'GPTBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-Web',
+  'anthropic-ai',
+  'PerplexityBot',
+  'Google-Extended',
+  'Applebot-Extended',
+  'CCBot',
+  'Bytespider'
+];
+
+// HTML Rewriter - Inject Organization Schema inside <head> (after <title>)
+class OrganizationSchemaInjector {
+  element(element: Element) {
+    const schema = `<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Folder2Text",
+  "url": "https://folder2text.com",
+  "logo": "https://folder2text.com/logo.png",
+  "description": "Free online tool to convert folder structures to text format with AI analysis",
+  "founder": {
+    "@type": "Person",
+    "name": "Umberto Di Puorto",
+    "url": "https://www.umbertodipuorto.it"
+  },
+  "sameAs": [
+    "https://github.com/UmbertoDiP/folder2text"
+  ]
+}
+</script>`;
+    element.after(schema, { html: true });
+  }
+}
+
+// HTML Rewriter - Inject H1 (SEO-visible but visually hidden)
+class H1Injector {
+  element(element: Element) {
+    const h1 = '<h1 style="position:absolute;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);height:1px;width:1px;margin:-1px;overflow:hidden;padding:0;white-space:nowrap">Folder2Text - Convert Folders to Text Format</h1>';
+    element.after(h1, { html: true });
+  }
+}
+
+// HTML Rewriter - Wrap #root in <main> tag
+class MainWrapper {
+  element(element: Element) {
+    element.before('<main role="main" id="main-content">', { html: true });
+    element.after('</main>', { html: true });
+  }
+}
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+  const { request, next, env } = context;
+  const url = new URL(request.url);
+  const userAgent = request.headers.get('User-Agent') || '';
+
+  // FIX 1: Allow AI Crawlers (bypass Cloudflare managed content)
+  const isAICrawler = AI_CRAWLERS.some(bot => userAgent.includes(bot));
+
+  // FIX 2: Handle SPA routing (prevent 308 redirects)
+  // Serve index.html for all routes (except assets)
+  let modifiedRequest = request;
+  if (
+    !url.pathname.startsWith('/assets') &&
+    !url.pathname.includes('.') &&
+    url.pathname !== '/'
+  ) {
+    // Rewrite to index.html for SPA routing
+    url.pathname = '/index.html';
+    modifiedRequest = new Request(url.toString(), request);
+  }
+
+  // Get response from origin
+  let response = await next(modifiedRequest);
+
+  // CRITICAL FIX: If response is 308 redirect (Cloudflare dashboard override),
+  // force serve index.html with 200 status for SPA routing
+  if (response.status === 308 || response.status === 301 || response.status === 302) {
+    const indexUrl = new URL(request.url);
+    indexUrl.pathname = '/index.html';
+    const indexRequest = new Request(indexUrl.toString(), request);
+    response = await env.ASSETS.fetch(indexRequest);
+  }
+
+  // Only process HTML responses
+  const contentType = response.headers.get('Content-Type') || '';
+  if (!contentType.includes('text/html')) {
+    return response;
+  }
+
+  // Clone response for modification
+  response = new Response(response.body, response);
+
+  // Set AI-friendly headers
+  response.headers.set('X-Robots-Tag', 'all');
+  response.headers.set('X-AI-Crawlers', 'allowed');
+  response.headers.set('X-Middleware-Active', 'true');
+
+  // Bypass Cloudflare bot management for AI crawlers
+  if (isAICrawler) {
+    response.headers.set('CF-Bypass-Cache', '1');
+  }
+
+  // FIX 3, 4, 5: HTML Rewriting (inject missing elements)
+  const rewriter = new HTMLRewriter()
+    // Inject Organization schema inside <head> (after <title>)
+    .on('title', new OrganizationSchemaInjector())
+    // Inject H1 after <body>
+    .on('body', new H1Injector())
+    // Wrap #root div in <main> tag
+    .on('#root', new MainWrapper());
+
+  return rewriter.transform(response);
+};

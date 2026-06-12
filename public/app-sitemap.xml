@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Homepage - All languages -->
+  <url>
+    <loc>https://clearcvapp.com/it</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://clearcvapp.com/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clearcvapp.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://clearcvapp.com/es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://clearcvapp.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://clearcvapp.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://clearcvapp.com/pl"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://clearcvapp.com/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clearcvapp.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://clearcvapp.com/es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://clearcvapp.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://clearcvapp.com/nl"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://clearcvapp.com/pl"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/de</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://clearcvapp.com/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clearcvapp.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/fr</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://clearcvapp.com/de"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clearcvapp.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/es</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://clearcvapp.com/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/pt</loc>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://clearcvapp.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Editor pages -->
+  <url>
+    <loc>https://clearcvapp.com/it/editor</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it/editor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en/editor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://clearcvapp.com/de/editor"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clearcvapp.com/fr/editor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en/editor"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/en/editor</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it/editor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en/editor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://clearcvapp.com/de/editor"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clearcvapp.com/fr/editor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en/editor"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/de/editor</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it/editor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en/editor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://clearcvapp.com/de/editor"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clearcvapp.com/fr/editor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en/editor"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/fr/editor</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it/editor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en/editor"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://clearcvapp.com/de/editor"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://clearcvapp.com/fr/editor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en/editor"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Auth pages -->
+  <url>
+    <loc>https://clearcvapp.com/it/auth</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it/auth"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en/auth"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en/auth"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://clearcvapp.com/en/auth</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://clearcvapp.com/it/auth"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clearcvapp.com/en/auth"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clearcvapp.com/en/auth"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

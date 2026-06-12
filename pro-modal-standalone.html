@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pro Waitlist Modal - Standalone Wrapper</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Fonts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  </noscript>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    #root {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Hide navigation, footer, and all non-modal content */
+    nav, footer, header {
+      display: none !important;
+    }
+
+    /* Hide all direct children of main content except modals */
+    #root > div > * :not([role="dialog"]):not([data-modal]) {
+      display: none !important;
+    }
+
+    /* Ensure modal is visible and fullscreen */
+    [role="dialog"] {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 9999 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    /* Modal backdrop transparency fix (from FolderTextMerger) */
+    [role="dialog"] > div:first-child {
+      background: rgba(0, 0, 0, 0.6) !important;
+      backdrop-filter: blur(4px) !important;
+    }
+
+    /* Loading indicator */
+    .wrapper-loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(247, 247, 250, 0.95);
+      z-index: 10000;
+      font-size: 14px;
+      color: #666;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .wrapper-loading.hidden {
+      display: none;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #00BFC2;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Error state */
+    .wrapper-error {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      z-index: 10001;
+      padding: 40px;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .wrapper-error.visible {
+      display: flex;
+    }
+
+    .wrapper-error h2 {
+      color: #CC1F8C;
+      margin-bottom: 16px;
+      font-size: 20px;
+    }
+
+    .wrapper-error p {
+      color: #666;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .wrapper-error code {
+      background: #f5f5f5;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading indicator -->
+  <div class="wrapper-loading" id="loading">
+    <div class="spinner"></div>
+    <div>Loading Pro Modal...</div>
+  </div>
+
+  <!-- Error indicator -->
+  <div class="wrapper-error" id="error">
+    <h2>Failed to Load Modal</h2>
+    <p id="error-message"></p>
+    <p style="color: #999; font-size: 12px; margin-top: 16px;">Check console for details</p>
+  </div>
+
+  <!-- React app container -->
+  <div id="root"></div>
+
+  <!-- QWebChannel for PyQt6 integration -->
+  <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+
+  <!-- STEP 1: Wrapper Bridge Config (MUST load BEFORE React app) -->
+  <script src="./wrapper-config.js"></script>
+
+  <!-- STEP 2: Wrapper Bridge API for PyQt6/Electron -->
+  <script>
+    // Configuration from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const WRAPPER_CONFIG = {
+      language: urlParams.get('language') || 'en',
+      trial: parseInt(urlParams.get('trial') || '0', 10),
+      plan: urlParams.get('plan') || 'monthly'
+    };
+
+    // Bridge API for external integration
+    window.ProModalBridge = {
+      config: WRAPPER_CONFIG,
+
+      // Open modal (called after React loads)
+      openModal: function(planType = null) {
+        const plan = planType || this.config.plan;
+        console.log('[Bridge] Triggering modal open for plan:', plan);
+
+        // Find and click the Pro button to open the waitlist modal
+        // This simulates user clicking on "Get Pro" button in the app
+        const timer = setInterval(() => {
+          // Look for Pro upgrade button or pricing button
+          const buttons = document.querySelectorAll('button');
+          const proButton = Array.from(buttons).find(btn =>
+            btn.textContent.toLowerCase().includes('pro') ||
+            btn.textContent.toLowerCase().includes('upgrade') ||
+            btn.textContent.toLowerCase().includes('waitlist')
+          );
+
+          if (proButton) {
+            clearInterval(timer);
+            console.log('[Bridge] Found Pro button, clicking...');
+            proButton.click();
+
+            // Hide loading after modal opens
+            setTimeout(() => {
+              document.getElementById('loading').classList.add('hidden');
+            }, 500);
+          }
+        }, 100);
+
+        // Timeout after 5 seconds
+        setTimeout(() => {
+          clearInterval(timer);
+          // If no button found, try direct state manipulation (fallback)
+          console.warn('[Bridge] Button not found, trying direct state manipulation');
+          this.forceModalOpen(plan);
+        }, 5000);
+      },
+
+      // Force modal open by manipulating React state (fallback)
+      forceModalOpen: function(plan) {
+        console.log('[Bridge] Force opening modal via state manipulation');
+
+        // Try to find React root and manipulate state
+        const root = document.getElementById('root');
+        if (root && root._reactRootContainer) {
+          // This is a hack - in production you'd expose a proper API
+          console.log('[Bridge] Found React root, dispatching event');
+
+          // Emit custom event that the app can listen to
+          const event = new CustomEvent('wrapper:open-waitlist', {
+            detail: { plan }
+          });
+          window.dispatchEvent(event);
+        }
+
+        // Hide loading anyway
+        setTimeout(() => {
+          document.getElementById('loading').classList.add('hidden');
+        }, 1000);
+      },
+
+      // Close modal
+      closeModal: function() {
+        console.log('[Bridge] Closing modal');
+        const event = new CustomEvent('wrapper:close-modal');
+        window.dispatchEvent(event);
+      },
+
+      // Event listeners for PyQt6/Electron
+      onWaitlistSubmit: function(callback) {
+        window.addEventListener('waitlist:submitted', (e) => {
+          callback(e.detail);
+        });
+      },
+
+      onModalClose: function(callback) {
+        window.addEventListener('modal:closed', () => {
+          callback();
+        });
+      }
+    };
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', function() {
+      console.log('[Bridge] DOM loaded, config:', WRAPPER_CONFIG);
+
+      // Wait for React to mount
+      setTimeout(function() {
+        console.log('[Bridge] Triggering modal open');
+        window.ProModalBridge.openModal();
+      }, 1500);
+    });
+
+    // Error handling
+    window.addEventListener('error', function(e) {
+      console.error('[Wrapper Error]', e);
+      document.getElementById('error-message').innerHTML =
+        '<code>' + (e.message || 'Unknown error') + '</code>';
+      document.getElementById('error').classList.add('visible');
+      document.getElementById('loading').classList.add('hidden');
+    });
+
+    // Intercept Supabase edge function calls to add logging
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+      const url = args[0];
+      if (typeof url === 'string' && url.includes('pro-waitlist-notify')) {
+        console.log('[Bridge] Intercepted waitlist API call:', url);
+      }
+      return originalFetch.apply(this, args);
+    };
+
+    console.log('[Bridge] Initialized. Language:', WRAPPER_CONFIG.language, 'Trial:', WRAPPER_CONFIG.trial, 'Plan:', WRAPPER_CONFIG.plan);
+  </script>
+
+  <!-- STEP 3: Load React app bundle from dist/ -->
+  <!-- IMPORTANT: Update these paths after running `npm run build` -->
+  <!-- These are the actual bundled files from the Vite build -->
+  <link rel="stylesheet" href="./dist/assets/index-BFZybRJ9.css">
+  <script type="module" src="./dist/assets/index-Ccfk1djt.js"></script>
+
+  <!-- STEP 4: Post-load injection to ensure modal is visible -->
+  <script>
+    // Monitor for modal appearing in DOM
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.getAttribute && node.getAttribute('role') === 'dialog') {
+            console.log('[Bridge] Modal detected in DOM');
+            document.getElementById('loading').classList.add('hidden');
+            observer.disconnect();
+          }
+        });
+      });
+    });
+
+    // Start observing after a short delay
+    setTimeout(() => {
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }, 1000);
+  </script>
+</body>
+</html>
