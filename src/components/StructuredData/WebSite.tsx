@@ -8,7 +8,7 @@ export const WebSite = () => {
     name: 'Chronos',
     url: BASE_URL,
     description:
-      'Free tool to export folder structures to text files optimized for ChatGPT, Claude and LLMs',
+      'AI Auto-Pilot and Autoclicker for Windows, designed for AI tools like Cursor, Claude and Windsurf',
     potentialAction: {
       '@type': 'SearchAction',
       target: {

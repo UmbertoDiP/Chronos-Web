@@ -1,5 +1,5 @@
-# Chronos - Convert Folders to LLM Context Files
-# https://chronos.dev
+# Chronos - AI Auto-Pilot & Autoclicker for Windows
+# https://chronos-bot.com
 
 # Major Search Engines
 User-agent: Googlebot
@@ -78,7 +78,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://chronos.dev/sitemap.xml
+Sitemap: https://chronos-bot.com/sitemap.xml
 
 # Disallow private pages
 Disallow: /api/

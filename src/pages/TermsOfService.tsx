@@ -70,7 +70,7 @@ const TermsOfService = () => {
         },
         {
           heading: '2. Service Description',
-          content: 'Chronos is a Windows desktop application that converts folder structures into text files optimized for language models (LLMs) like ChatGPT and Claude. The service includes:\n• Folder structure scanning and conversion\n• Exclusion pattern configuration\n• File extension filtering\n• Output optimized for LLM context windows'
+          content: 'Chronos is a Windows desktop application that automates AI interactions by handling security popups and cooldowns like ChatGPT and Claude. The service includes:\n• Background vision and OCR detection\n• Auto-clicker for AI agents\n• Profile and workspace management\n• Automated workflow execution'
         },
         {
           heading: '3. Plans and Pricing',

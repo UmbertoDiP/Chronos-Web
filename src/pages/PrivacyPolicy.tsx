@@ -61,7 +61,7 @@ const PrivacyPolicy = () => {
         },
         {
           heading: '12. Contattaci',
-          content: 'Se hai domande o dubbi su questa informativa sulla privacy o sulle pratiche sui dati di Chronos, contattaci:\n\n• **Email**: umberto.dipuorto@gmail.com\n• **Sito web**: https://chronos.dev'
+          content: 'Se hai domande o dubbi su questa informativa sulla privacy o sulle pratiche sui dati di Chronos, contattaci:\n\n• **Email**: umberto.dipuorto@gmail.com\n• **Sito web**: https://chronos-bot.com'
         },
         {
           heading: '13. Conformità',
@@ -120,7 +120,7 @@ const PrivacyPolicy = () => {
         },
         {
           heading: '12. Contact Us',
-          content: 'If you have any questions or concerns about this privacy policy or Chronos\'s data practices, please contact us:\n\n• **Email**: umberto.dipuorto@gmail.com\n• **Website**: https://chronos.dev'
+          content: 'If you have any questions or concerns about this privacy policy or Chronos\'s data practices, please contact us:\n\n• **Email**: umberto.dipuorto@gmail.com\n• **Website**: https://chronos-bot.com'
         },
         {
           heading: '13. Compliance',
